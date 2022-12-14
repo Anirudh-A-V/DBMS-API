@@ -195,6 +195,80 @@ const deleteBillStatus = (request, response) => {
     })
 }
 
+/*--------------------------------------------------------------------------------------------------------------------- */
+
+// Complaint queries
+
+const getComplaints = (request, response) => {
+    pool.query('SELECT * FROM complaint ORDER BY complaint_id ASC', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+const getComplaintById = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('SELECT * FROM complaint WHERE complaint_id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+const createComplaint = (request, response) => {
+    const { consumer_id, description, date } = request.body
+    
+    pool.query('INSERT INTO complaint (consumer_id, description, date) VALUES ($1, $2, $3)', [consumer_id, description, date], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(201).send(`Complaint added with ID: ${results.insertId}`)
+    })
+}
+
+const updateComplaint = (request, response) => {
+    const id = parseInt(request.params.id)
+    const { description, date } = request.body
+
+    pool.query(
+        'UPDATE complaint SET description = $2, date = $3 WHERE complaint_id = $1',
+        [id, description, date],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            response.status(200).send(`Complaint modified with ID: ${id}`)
+        }
+    )
+}
+
+const deleteComplaint = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('DELETE FROM complaint WHERE complaint_id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).send(`Complaint deleted with ID: ${id}`)
+    })
+}
+
+const getComplaintByConsumerId = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('SELECT * FROM complaint WHERE consumer_id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+
 
 module.exports = {
     getUsers,
@@ -211,6 +285,12 @@ module.exports = {
     getBillStatusById,
     createBillStatus,
     updateBillStatus,
-    deleteBillStatus
-    
+    deleteBillStatus,
+    getComplaints,
+    getComplaintById,
+    createComplaint,
+    updateComplaint,
+    deleteComplaint,
+    getComplaintByConsumerId
+
 }
