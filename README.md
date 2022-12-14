@@ -146,4 +146,3 @@ node index.js
 ```uri
 /admin/:id
 ```
-
