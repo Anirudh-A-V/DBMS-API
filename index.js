@@ -46,6 +46,12 @@ app.put('/complaint/:id', db.updateComplaint)
 app.delete('/complaint/:id', db.deleteComplaint)
 app.get('/complaint/consumer/:id', db.getComplaintByConsumerId)
 
+app.get('/admin', db.getAdmins)
+app.get('/admin/:id', db.getAdminById)
+app.post('/admin', db.createAdmin)
+app.put('/admin/:id', db.updateAdmin)
+app.delete('/admin/:id', db.deleteAdmin)
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })

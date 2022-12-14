@@ -268,7 +268,67 @@ const getComplaintByConsumerId = (request, response) => {
     })
 }
 
+/*--------------------------------------------------------------------------------------------------------------------- */
 
+// Admin queries
+
+const getAdmins = (request, response) => {
+    pool.query('SELECT * FROM admin ORDER BY admin_id ASC', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+const getAdminById = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('SELECT * FROM admin WHERE admin_id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+const createAdmin = (request, response) => {
+    const { username, password } = request.body
+
+    pool.query('INSERT INTO admin (username, password) VALUES ($1, $2)', [username, password], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(201).send(`Admin added with ID: ${results.insertId}`)
+    })
+}
+
+const updateAdmin = (request, response) => {
+    const id = parseInt(request.params.id)
+    const { username, password } = request.body
+
+    pool.query(
+        'UPDATE admin SET username = $2, password = $3 WHERE admin_id = $1',
+        [id, username, password],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            response.status(200).send(`Admin modified with ID: ${id}`)
+        }
+    )
+}
+
+const deleteAdmin = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('DELETE FROM admin WHERE admin_id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).send(`Admin deleted with ID: ${id}`)
+    })
+}
 
 module.exports = {
     getUsers,
@@ -291,6 +351,10 @@ module.exports = {
     createComplaint,
     updateComplaint,
     deleteComplaint,
-    getComplaintByConsumerId
-
+    getComplaintByConsumerId,
+    getAdmins,
+    getAdminById,
+    createAdmin,
+    updateAdmin,
+    deleteAdmin
 }
