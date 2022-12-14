@@ -33,6 +33,11 @@ app.post('/bills', db.createBill)
 app.put('/bills/:id', db.updateBill)
 app.delete('/bills/:id', db.deleteBill)
 
+app.get('/billstatus', db.getBillStatus)
+app.get('/billstatus/:id', db.getBillStatusById)
+app.post('/billstatus', db.createBillStatus)
+app.put('/billstatus/:id', db.updateBillStatus)
+app.delete('/billstatus/:id', db.deleteBillStatus)
 
 
 app.listen(port, () => {
