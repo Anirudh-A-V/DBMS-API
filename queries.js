@@ -8,6 +8,7 @@ const pool = new Pool({
     ssl: process.env.DATABASE_URL ? true : false
 })
 
+/*--------------------------------------------------------------------------------------------------------------------- */
 
 // Consumer queries
 
@@ -69,8 +70,67 @@ const deleteUser = (request, response) => {
     })
 }
 
+/*--------------------------------------------------------------------------------------------------------------------- */
 
 // Bill queries
+
+const getBills = (request, response) => {
+    pool.query('SELECT * FROM bill ORDER BY bill_id ASC', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+const getBillById = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('SELECT * FROM bill WHERE bill_id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+const createBill = (request, response) => {
+    const { consumer_id, units, amount, due_date } = request.body
+
+    pool.query('INSERT INTO bill (consumer_id, units, amount, due_date) VALUES ($1, $2, $3, $4)', [consumer_id, units, amount, due_date], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(201).send(`Bill added with ID: ${results.insertId}`)
+    })
+}
+
+const updateBill = (request, response) => {
+    const id = parseInt(request.params.id)
+    const { bill_id, consumer_id, units, amount, due_date } = request.body
+
+    pool.query(
+        'UPDATE bill SET consumer_id = $2, units = $3, amount = $4, due_date = $5 WHERE bill_id = $1',
+        [id, consumer_id, units, amount, due_date],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            response.status(200).send(`Bill modified with ID: ${id}`)
+        }
+    )
+}
+
+const deleteBill = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('DELETE FROM bill WHERE bill_id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).send(`Bill deleted with ID: ${id}`)
+    })
+}
 
 
 
@@ -80,4 +140,9 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
+    getBills,
+    getBillById,
+    createBill,
+    updateBill,
+    deleteBill,
 }
