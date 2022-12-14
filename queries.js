@@ -1,10 +1,11 @@
 const Pool = require('pg').Pool
+require('dotenv').config();
 
-const DATABASE_URL = 'postgres://anirudhav02:7auczYBbJnwn7Lx00TUIWfgl5JUyPmbm@dpg-ceappq6n6mphc8u5cnbg-a.singapore-postgres.render.com/dbmsminiproject';
+const DB_URL = process.env.DATABASE_URL;
 
 const pool = new Pool({
-    connectionString: DATABASE_URL,
-    ssl: true
+    connectionString: DB_URL,
+    ssl: process.env.DATABASE_URL ? true : false
 })
 
 
