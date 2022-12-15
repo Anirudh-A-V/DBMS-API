@@ -100,6 +100,18 @@ app.get('/', (request, response) => {
             "PUT",
             "DELETE"
           ]
+        },
+        {
+          "route": "/admin/login",
+          "methods": [
+            "POST"
+          ]
+        },
+        {
+          "route": "/users/login",
+          "methods": [
+            "POST"
+          ]
         }
       ]
     }
@@ -136,6 +148,9 @@ app.get('/admin/:id', db.getAdminById)
 app.post('/admin', db.createAdmin)
 app.put('/admin/:id', db.updateAdmin)
 app.delete('/admin/:id', db.deleteAdmin)
+
+app.post('/admin/login', db.loginAdmin)
+app.post('/users/login', db.loginUser)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

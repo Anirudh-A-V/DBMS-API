@@ -70,6 +70,17 @@ const deleteUser = (request, response) => {
     })
 }
 
+const loginUser = (request, response) => {
+    const { username, password } = request.body;
+
+    pool.query('SELECT consumer_id, username, address, phone FROM consumer WHERE username=$1 AND password=$2', [username, password], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
 /*--------------------------------------------------------------------------------------------------------------------- */
 
 // Bill queries
@@ -148,7 +159,7 @@ const getBillStatus = (request, response) => {
 const getBillStatusById = (request,
     response) => {
     const id = parseInt(request.params.id)
-    
+
     pool.query('SELECT * FROM billstatus WHERE bill_id = $1', [id], (error, results) => {
         if (error) {
             throw error
@@ -221,7 +232,7 @@ const getComplaintById = (request, response) => {
 
 const createComplaint = (request, response) => {
     const { consumer_id, description, date } = request.body
-    
+
     pool.query('INSERT INTO complaint (consumer_id, description, date) VALUES ($1, $2, $3)', [consumer_id, description, date], (error, results) => {
         if (error) {
             throw error
@@ -330,6 +341,17 @@ const deleteAdmin = (request, response) => {
     })
 }
 
+const loginAdmin = (request, response) => {
+    const { username, password } = request.body;
+
+    pool.query('SELECT admin_id, username FROM admin WHERE username=$1 AND password=$2', [username, password], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
 module.exports = {
     getUsers,
     getUserById,
@@ -356,5 +378,7 @@ module.exports = {
     getAdminById,
     createAdmin,
     updateAdmin,
-    deleteAdmin
+    deleteAdmin,
+    loginAdmin,
+    loginUser
 }
