@@ -1,5 +1,3 @@
-
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -52,3 +50,4 @@ app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })
 
+module.exports = app;
