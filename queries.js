@@ -106,9 +106,9 @@ const getBillById = (request, response) => {
 }
 
 const createBill = (request, response) => {
-    const { consumer_id, units, amount, due_date } = request.body
+    const { consumer_id, units, current_reading, due_date, tax } = request.body
 
-    pool.query('INSERT INTO bill (consumer_id, units, amount, due_date) VALUES ($1, $2, $3, $4)', [consumer_id, units, amount, due_date], (error, results) => {
+    pool.query('INSERT INTO bill (consumer_id, units, current_reading, due_date, tax) VALUES ($1, $2, $3, $4, $5)', [consumer_id, units, current_reading, due_date, tax], (error, results) => {
         if (error) {
             throw error
         }
@@ -118,11 +118,11 @@ const createBill = (request, response) => {
 
 const updateBill = (request, response) => {
     const id = parseInt(request.params.id)
-    const { bill_id, consumer_id, units, amount, due_date } = request.body
+    const { bill_id, consumer_id, units, current_reading, due_date, tax } = request.body
 
     pool.query(
-        'UPDATE bill SET consumer_id = $2, units = $3, amount = $4, due_date = $5 WHERE bill_id = $1',
-        [id, consumer_id, units, amount, due_date],
+        'UPDATE bill SET consumer_id = $2, units = $3, current_reading = $4, due_date = $5, tax = $6 WHERE bill_id = $1',
+        [id, consumer_id, units, current_reading, due_date, tax],
         (error, results) => {
             if (error) {
                 throw error
