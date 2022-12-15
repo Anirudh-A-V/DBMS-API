@@ -15,6 +15,97 @@ app.use(
   })
 )
 
+app.get('/', (request, response) => {
+  response.json(
+    {
+      "message": "Welcome to the Electricity Billing System API",
+      "routes": [
+        {
+          "route": "/users",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        {
+          "route": "/users/:id",
+          "methods": [
+            "GET",
+            "PUT",
+            "DELETE"
+          ]
+        },
+        {
+          "route": "/bills",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        {
+          "route": "/bills/:id",
+          "methods": [
+            "GET",
+            "PUT",
+            "DELETE"
+          ]
+        },
+        {
+          "route": "/billstatus",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        {
+          "route": "/billstatus/:id",
+          "methods": [
+            "GET",
+            "PUT",
+            "DELETE"
+          ]
+        },
+        {
+          "route": "/complaint",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        {
+          "route": "/complaint/:id",
+          "methods": [
+            "GET",
+            "PUT",
+            "DELETE"
+          ]
+        },
+        {
+          "route": "/complaint/consumer/:id",
+          "methods": [
+            "GET"
+          ]
+        },
+        {
+          "route": "/admin",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        {
+          "route": "/admin/:id",
+          "methods": [
+            "GET",
+            "PUT",
+            "DELETE"
+          ]
+        }
+      ]
+    }
+  )
+})
+
 app.get('/users', db.getUsers)
 app.get('/users/:id', db.getUserById)
 app.post('/users', db.createUser)
