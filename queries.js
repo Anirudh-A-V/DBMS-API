@@ -137,6 +137,21 @@ const getBillById = (request, response) => {
     })
 }
 
+const getBillByConsumerId = (request, response) => {
+    const { consumer_id, month, year } = request.body
+
+    pool.query('SELECT * FROM bill WHERE consumer_id = $1 AND month = $2 AND year = $3', [consumer_id, month, year], (error, results) => {
+        if (error) {
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
 const createBill = (request, response) => {
     const { consumer_id, units, current_reading, due_date, tax } = request.body
 
@@ -472,6 +487,7 @@ module.exports = {
     deleteUser,
     getBills,
     getBillById,
+    getBillByConsumerId,
     createBill,
     updateBill,
     deleteBill,
