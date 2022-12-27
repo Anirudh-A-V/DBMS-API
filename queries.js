@@ -15,7 +15,11 @@ const pool = new Pool({
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM consumer ORDER BY consumer_id ASC', (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -26,7 +30,11 @@ const getUserById = (request, response) => {
 
     pool.query('SELECT * FROM consumer WHERE consumer_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -37,7 +45,11 @@ const createUser = (request, response) => {
 
     pool.query('INSERT INTO consumer (username, address, phone, password) VALUES ($1, $2, $3, $4)', [username, address, phone, password], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(201).send(`User added with ID: ${results.insertId}`)
     })
@@ -52,7 +64,11 @@ const updateUser = (request, response) => {
         [id, username, address, phone],
         (error, results) => {
             if (error) {
-                throw error
+                return response.status(400).json({
+                    success: false,
+                    error: error.name,
+                    message: error.message
+                })
             }
             response.status(200).send(`User modified with ID: ${id}`)
         }
@@ -64,7 +80,11 @@ const deleteUser = (request, response) => {
 
     pool.query('DELETE FROM consumer WHERE consumer_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).send(`User deleted with ID: ${id}`)
     })
@@ -75,7 +95,11 @@ const loginUser = (request, response) => {
 
     pool.query('SELECT consumer_id, username, address, phone FROM consumer WHERE username=$1 AND password=$2', [username, password], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -88,7 +112,11 @@ const loginUser = (request, response) => {
 const getBills = (request, response) => {
     pool.query('SELECT * FROM bill ORDER BY bill_id ASC', (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -99,7 +127,11 @@ const getBillById = (request, response) => {
 
     pool.query('SELECT * FROM bill WHERE bill_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -110,7 +142,11 @@ const createBill = (request, response) => {
 
     pool.query('INSERT INTO bill (consumer_id, units, current_reading, due_date, tax) VALUES ($1, $2, $3, $4, $5)', [consumer_id, units, current_reading, due_date, tax], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(201).send(`Bill added with ID: ${results.insertId}`)
     })
@@ -125,7 +161,11 @@ const updateBill = (request, response) => {
         [id, consumer_id, units, current_reading, due_date, tax],
         (error, results) => {
             if (error) {
-                throw error
+                return response.status(400).json({
+                    success: false,
+                    error: error.name,
+                    message: error.message
+                })
             }
             response.status(200).send(`Bill modified with ID: ${id}`)
         }
@@ -137,7 +177,11 @@ const deleteBill = (request, response) => {
 
     pool.query('DELETE FROM bill WHERE bill_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).send(`Bill deleted with ID: ${id}`)
     })
@@ -150,7 +194,11 @@ const deleteBill = (request, response) => {
 const getBillStatus = (request, response) => {
     pool.query('SELECT * FROM billstatus ORDER BY bill_id ASC', (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -162,7 +210,11 @@ const getBillStatusById = (request,
 
     pool.query('SELECT * FROM billstatus WHERE bill_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -173,7 +225,11 @@ const createBillStatus = (request, response) => {
 
     pool.query('INSERT INTO billstatus (bill_id, status) VALUES ($1, $2)', [bill_id, status], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(201).send(`Bill status added with ID: ${results.insertId}`)
     })
@@ -188,7 +244,11 @@ const updateBillStatus = (request, response) => {
         [id, bill_id, status],
         (error, results) => {
             if (error) {
-                throw error
+                return response.status(400).json({
+                    success: false,
+                    error: error.name,
+                    message: error.message
+                })
             }
             response.status(200).send(`Bill status modified with ID: ${id}`)
         }
@@ -200,7 +260,11 @@ const deleteBillStatus = (request, response) => {
 
     pool.query('DELETE FROM billstatus WHERE bill_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).send(`Bill status deleted with ID: ${id}`)
     })
@@ -213,7 +277,11 @@ const deleteBillStatus = (request, response) => {
 const getComplaints = (request, response) => {
     pool.query('SELECT * FROM complaint ORDER BY complaint_id ASC', (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -224,7 +292,11 @@ const getComplaintById = (request, response) => {
 
     pool.query('SELECT * FROM complaint WHERE complaint_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -235,7 +307,11 @@ const createComplaint = (request, response) => {
 
     pool.query('INSERT INTO complaint (consumer_id, description, date) VALUES ($1, $2, $3)', [consumer_id, description, date], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(201).send(`Complaint added with ID: ${results.insertId}`)
     })
@@ -250,7 +326,11 @@ const updateComplaint = (request, response) => {
         [id, description, date],
         (error, results) => {
             if (error) {
-                throw error
+                return response.status(400).json({
+                    success: false,
+                    error: error.name,
+                    message: error.message
+                })
             }
             response.status(200).send(`Complaint modified with ID: ${id}`)
         }
@@ -262,7 +342,11 @@ const deleteComplaint = (request, response) => {
 
     pool.query('DELETE FROM complaint WHERE complaint_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).send(`Complaint deleted with ID: ${id}`)
     })
@@ -273,7 +357,11 @@ const getComplaintByConsumerId = (request, response) => {
 
     pool.query('SELECT * FROM complaint WHERE consumer_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -286,7 +374,11 @@ const getComplaintByConsumerId = (request, response) => {
 const getAdmins = (request, response) => {
     pool.query('SELECT * FROM admin ORDER BY admin_id ASC', (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -297,7 +389,11 @@ const getAdminById = (request, response) => {
 
     pool.query('SELECT * FROM admin WHERE admin_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
@@ -308,7 +404,11 @@ const createAdmin = (request, response) => {
 
     pool.query('INSERT INTO admin (username, password) VALUES ($1, $2)', [username, password], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(201).send(`Admin added with ID: ${results.insertId}`)
     })
@@ -323,7 +423,11 @@ const updateAdmin = (request, response) => {
         [id, username, password],
         (error, results) => {
             if (error) {
-                throw error
+                return response.status(400).json({
+                    success: false,
+                    error: error.name,
+                    message: error.message
+                })
             }
             response.status(200).send(`Admin modified with ID: ${id}`)
         }
@@ -335,7 +439,11 @@ const deleteAdmin = (request, response) => {
 
     pool.query('DELETE FROM admin WHERE admin_id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).send(`Admin deleted with ID: ${id}`)
     })
@@ -346,7 +454,11 @@ const loginAdmin = (request, response) => {
 
     pool.query('SELECT admin_id, username FROM admin WHERE username=$1 AND password=$2', [username, password], (error, results) => {
         if (error) {
-            throw error
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
         }
         response.status(200).json(results.rows)
     })
