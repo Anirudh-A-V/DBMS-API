@@ -163,7 +163,7 @@ const createBill = (request, response) => {
                 message: error.message
             })
         }
-        response.status(201).send(`Bill added with ID: ${results.insertId}`)
+        response.status(201).send(`Bill added with ID: ${results.oid}`)
     })
 }
 
