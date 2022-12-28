@@ -51,7 +51,7 @@ app.get('/', (request, response) => {
           ]
         },
         {
-          "route": "/bills/consumer",
+          "route": "/bills/consumer/:id",
           "methods": [
             "GET"
           ]
@@ -132,7 +132,7 @@ app.delete('/users/:id', db.deleteUser)
 
 app.get('/bills', db.getBills)
 app.get('/bills/:id', db.getBillById)
-app.get('/bills/consumer', db.getBillByConsumerId)
+app.get('/bills/consumer/:id', db.getBillByConsumerId)
 app.post('/bills', db.createBill)
 app.put('/bills/:id', db.updateBill)
 app.delete('/bills/:id', db.deleteBill)

@@ -138,9 +138,10 @@ const getBillById = (request, response) => {
 }
 
 const getBillByConsumerId = (request, response) => {
-    const { consumer_id, month, year } = request.body
+    const { month, year } = request.body
+    const id = parseInt(request.params.id)
 
-    pool.query('SELECT * FROM bill WHERE consumer_id = $1 AND month = $2 AND year = $3', [consumer_id, month, year], (error, results) => {
+    pool.query('SELECT * FROM bill WHERE consumer_id = $1 AND month = $2 AND year = $3', [id, month, year], (error, results) => {
         if (error) {
             return response.status(400).json({
                 success: false,
