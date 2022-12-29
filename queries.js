@@ -383,6 +383,21 @@ const getComplaintByConsumerId = (request, response) => {
     })
 }
 
+const resolveComplaint = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('UPDATE complaint SET status = $2 WHERE complaint_id = $1', [id, true], (error, results) => {
+        if (error) {
+            return response.status(400).json({
+                success: false,
+                error: error.name,
+                message: error.message
+            })
+        }
+        response.status(200).send(`Complaint resolved with ID: ${id}`)
+    })
+}
+
 /*--------------------------------------------------------------------------------------------------------------------- */
 
 // Admin queries
@@ -503,6 +518,7 @@ module.exports = {
     updateComplaint,
     deleteComplaint,
     getComplaintByConsumerId,
+    resolveComplaint,
     getAdmins,
     getAdminById,
     createAdmin,
