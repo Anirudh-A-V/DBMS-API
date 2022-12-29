@@ -155,7 +155,7 @@ app.post('/complaint', db.createComplaint)
 app.put('/complaint/:id', db.updateComplaint)
 app.delete('/complaint/:id', db.deleteComplaint)
 app.get('/complaint/consumer/:id', db.getComplaintByConsumerId)
-app.put('/complaint/resolved/:id', db.resolveComplaint)
+app.put('/complaint/resolve/:id', db.resolveComplaint)
 
 app.get('/admin', db.getAdmins)
 app.get('/admin/:id', db.getAdminById)
