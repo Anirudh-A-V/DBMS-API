@@ -1,4 +1,14 @@
-const pool = require('../config/psql.js');
+// Description: This file contains the old structure of the queries and the database connection
+
+const Pool = require('pg').Pool
+require('dotenv').config();
+
+const DB_URL = process.env.DATABASE_URL;
+
+const pool = new Pool({
+    connectionString: DB_URL,
+    ssl: process.env.DATABASE_URL ? true : false
+})
 
 /*--------------------------------------------------------------------------------------------------------------------- */
 
