@@ -18,6 +18,7 @@ const resolveComplaint = require('./complaint-handlers').resolveComplaint
 const getBills = require('./bill-handlers').getBills
 const getBillById = require('./bill-handlers').getBillById
 const getBillByConsumerId = require('./bill-handlers').getBillByConsumerId
+const getLatestBillByConsumerId = require('./bill-handlers').getLatestBillByConsumerId
 const createBill = require('./bill-handlers').createBill
 const updateBill = require('./bill-handlers').updateBill
 const deleteBill = require('./bill-handlers').deleteBill
@@ -52,6 +53,7 @@ module.exports = {
     getBills,
     getBillById,
     getBillByConsumerId,
+    getLatestBillByConsumerId,
     createBill,
     updateBill,
     deleteBill,

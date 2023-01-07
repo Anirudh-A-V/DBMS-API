@@ -8,12 +8,12 @@ const pool = new Pool({
     ssl: process.env.DATABASE_URL ? true : false
 })
 
-pool.connect((err) => {
-    if (err) {
-        return console.log(err.name + ': ' + err.message)
-    } else {
-        console.log('Connected to database')
-    }
-})
+// pool.connect((err) => {
+//     if (err) {
+//         return console.log(err.name + ': ' + err.message)
+//     } else {
+//         console.log('Connected to database')
+//     }
+// })
 
 module.exports = pool
